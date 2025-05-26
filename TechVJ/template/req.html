@@ -377,10 +377,10 @@
         }
         
 	function playit_player() {
-    	const openLazyLink = lazyLink.trim();
-	const openPlayit1 = encodeURIComponent(openLazyLink);
-    	const openPlayit = `playit://playerv2/video?url=${openLazyLink1}`;
-   	 window.location.href = openPlayit;
+    	    const openLazyLink = lazyLink;
+    	    const openPlayit = `playit://playerv2/video?url=${openLazyLink}`;
+   	    window.location.href = openPlayit;
+	    console.log(openPlayit)
 	}
 	    
 	function s_player() {
