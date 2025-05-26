@@ -2,7 +2,7 @@ import random
 import humanize
 from Script import script
 from pyrogram import Client, filters, enums
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply, CallbackQuery
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from info import URL, LOG_CHANNEL, SHORTLINK
 from urllib.parse import quote_plus
 from TechVJ.util.file_properties import get_name, get_hash, get_media_file_size
@@ -36,19 +36,20 @@ async def stream_start(client, message):
     filesize = humanize.naturalsize(file.file_size) 
     fileid = file.file_id
     user_id = message.from_user.id
-    username =  message.from_user.mention 
+    username = message.from_user.mention 
 
     log_msg = await client.send_cached_media(
         chat_id=LOG_CHANNEL,
         file_id=fileid,
     )
-    fileName = {quote_plus(get_name(log_msg))}
+    fileName = quote_plus(get_name(log_msg))
+    
     if SHORTLINK == False:
-        stream = f"{URL}watch/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
-        download = f"{URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
+        stream = f"{URL}watch/{str(log_msg.id)}/{fileName}?hash={get_hash(log_msg)}"
+        download = f"{URL}{str(log_msg.id)}/{fileName}?hash={get_hash(log_msg)}"
     else:
-        stream = await get_shortlink(f"{URL}watch/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}")
-        download = await get_shortlink(f"{URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}")
+        stream = await get_shortlink(f"{URL}watch/{str(log_msg.id)}/{fileName}?hash={get_hash(log_msg)}")
+        download = await get_shortlink(f"{URL}{str(log_msg.id)}/{fileName}?hash={get_hash(log_msg)}")
 
     # Create the PlayIt URL
     playit_url = f"playit://playerv2/video?url={download}"
